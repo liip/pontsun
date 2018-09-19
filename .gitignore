@@ -1,0 +1,9 @@
+# Certificates
+*.crt
+*.csr
+*.key
+*.pem
+*.srl
+
+# Local
+.env
