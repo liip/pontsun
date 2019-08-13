@@ -1,9 +1,9 @@
-version: '3'
+version: '3.5'
 services:
 
   traefik:
     image: traefik:$TRAEFIK_TAG
-    container_name: 'traefik'
+    container_name: 'pontsun_traefik'
     command: -c /dev/null \
       --api \
       --api.dashboard=true \
@@ -14,24 +14,26 @@ services:
       --defaultEntryPoints='https' \
       --defaultEntryPoints='http' \
       --rootCAs='/certs/${PROJECT_NAME}.rootCA.crt' \
-      --entryPoints='Name:http Address::80 Redirect.EntryPoint:https' \
+      --entryPoints='Name:http Address::80' \
       --entryPoints='Name:https Address::443 TLS:/certs/${PROJECT_NAME}.crt,/certs/${PROJECT_NAME}.key' \
       --logLevel=ERROR
     restart: always
     ports:
-      - '80:80'
-      - '443:443'
+      - '${PONTSUN_HTTP_PORT}:80'
+      - '${PONTSUN_HTTPS_PORT}:443'
     volumes:
-      - ../certificates/:/certs/
+      - ${PONTSUN_DIR_ETC:-../etc/}/certificates/:/certs/
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - 'traefik.enable=true'
       - 'traefik.port=8080'
       - 'traefik.frontend.rule=Host:traefik.${PROJECT_NAME}.${PROJECT_EXTENSION}'
+    networks:
+      - pontsun
 
   portainer:
     image: portainer/portainer:$PORTAINER_TAG
-    container_name: 'portainer'
+    container_name: 'pontsun_portainer'
     restart: unless-stopped
     command: --no-auth -H unix:///var/run/docker.sock
     volumes:
@@ -40,3 +42,42 @@ services:
       - 'traefik.enable=true'
       - 'traefik.port=9000'
       - 'traefik.frontend.rule=Host:portainer.${PROJECT_NAME}.${PROJECT_EXTENSION}'
+    networks:
+      - pontsun
+
+  sshagent:
+    image: nardeas/ssh-agent:latest
+    container_name: pontsun_ssh_agent
+    volumes:
+      - "dot_ssh:/root/.ssh"
+      - "socket_dir:/.ssh-agent"
+    environment:
+      - SSH_AUTH_SOCK=/.ssh-agent/socket
+    networks:
+      - pontsun
+
+  dns:
+    image: docker.gitlab.liip.ch/druids/docker-toolbox/pontsun-dnsmasq:latest
+    container_name: pontsun_dns
+    restart: always
+    volumes:
+      - "$PONTSUN_DIR_ETC/dnsmasq.d/:/etc/dnsmasq.d/"
+    ports:
+      - 53:53/udp
+    networks:
+      - pontsun
+    logging:
+      options:
+        max-size: 20m
+
+networks:
+  pontsun:
+    name: $PONTSUN_NETWORK
+
+volumes:
+  dot_ssh:
+    name: pontsun_dot_ssh
+  socket_dir:
+    name: pontsun_socket_dir
+  globalcache_dir:
+    name: pontsun_globalcache_dir

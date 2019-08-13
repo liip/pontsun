@@ -1,25 +1,13 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
 
-# Load env file
-set -a
-test -f $(dirname $0)/../containers/.env && source $(dirname $0)/../containers/.env
-set +a
 
-cd $(dirname $0)/../certificates
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-if [ -f $PROJECT_NAME.crt ]; then
-    echo "Certificate already exists."
-else
-    subj="/C=CH/ST=FR/L=Fribourg/O=Liip/OU=Pontsun/CN=$PROJECT_NAME.$PROJECT_EXTENSION"
+. $DIR/env.sh
 
-    openssl genrsa -out $PROJECT_NAME.rootCA.key 4096
-    openssl req -x509 -new -nodes -key $PROJECT_NAME.rootCA.key -sha256 -days 1024 -out $PROJECT_NAME.rootCA.crt -subj "$subj"
+mkdir -p $PONTSUN_DIR_ETC/certificates/
 
-    openssl genrsa -out $PROJECT_NAME.key 4096
-    openssl req -new -sha256 -subj "$subj" -key $PROJECT_NAME.key -out $PROJECT_NAME.csr -config ../config/openssl.cnf
-    openssl x509 -req -in $PROJECT_NAME.csr -CA $PROJECT_NAME.rootCA.crt -CAkey $PROJECT_NAME.rootCA.key -CAcreateserial -out $PROJECT_NAME.crt -days 365 -extensions v3_req -extfile ../config/openssl.cnf
-
-    cat $PROJECT_NAME.crt $PROJECT_NAME.key > $PROJECT_NAME.pem
-    chmod 600 $PROJECT_NAME.key $PROJECT_NAME.pem
+docker run --rm -v $DIR/../:/generate/ -v $PONTSUN_DIR_ETC/certificates/:/certs/ -it docker.gitlab.liip.ch/druids/docker-toolbox/pontsun-helper:latest /generate/scripts/helper/docker-generate-certificates.sh $1
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    $DIR/install-cert-macos.sh $PONTSUN_DIR_ETC/certificates/$PROJECT_NAME.rootCA.crt
 fi

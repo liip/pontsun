@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+show_help() {
+    echo "Usage: pontsun [options] <command> [<args>]"
+    echo
+    echo "  -h     Print this help."
+    echo
+    echo "Common commands:"
+    echo "  up                     Starts pontsun services"
+    echo "  down                   Stops pontsun services"
+    echo "  generate-cert [host]   Generates needed ssl certificates"
+    echo "  add-host host          Add a host and wildcards to dnsmasq"
+}
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+# Initialize our own variables:
+output_file=""
+verbose=0
+
+
+while getopts "hv" opt; do
+    case "$opt" in
+    h)
+        echo "Here"
+        show_help
+        exit 0
+        ;;
+    v)  verbose=1
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "${1:-}" = "--" ] && shift
+
+if [ -z $1 ]; then
+   show_help
+   exit 0
+fi
+
+case "$1" in
+   up)
+     $DIR/up.sh
+     ;;
+   down)
+     $DIR/down.sh
+     ;;
+   generate-cert)
+     $DIR/generate-certificates.sh $2
+     ;;
+   add-host)
+     $DIR/add-host.sh $2
+     ;;
+   *)
+     echo "No such command: $1"
+     show_help
+     ;;
+esac
+
+
