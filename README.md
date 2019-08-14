@@ -2,14 +2,35 @@
 
 ## Installation
 
+### .env file
+
+Copy and adjust `containers/.env.example` to `containers/.env`
+
+```
+cp containers/.env.example containers/.env
+```
+
+### Generate SSL certificate
+
 Create certificates for HTTPS
 ```bash
-chmod u+x ./scripts/generate-certificates.sh
 ./scripts/generate-certificates.sh
 ```
-You need to add the generated certificate `certificates/docker.rootCA.crt` to your browser authorities and trust related websites.
+You need to add the generated certificate `etc/certificates/pontsun.rootCA.crt` to your browser authorities and trust related websites.
 
-Start Traefik and Portainer
+If you have [step-cli](https://smallstep.com/docs/cli/) or are on OS X, this should happen automatically.
+
+### Setup local DNS 
+
+See
+
+- [Docker installation for Mac](docs/docker-installation-for-mac.md)
+- [Docker installation for Ubuntu](docs/docker-installation-for-ubuntu.md)
+
+for now.
+
+###  Start pontsun with traefik and portainer
+
 ```bash
 cd containers
 docker-compose up -d
