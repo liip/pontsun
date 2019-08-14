@@ -4,10 +4,11 @@
 
 Create certificates for HTTPS
 ```bash
-chmod u+x ./scripts/generate-certificates.sh
-./scripts/generate-certificates.sh
+./scripts/pontsun generate-cert
 ```
-You need to add the generated certificate `certificates/docker.rootCA.crt` to your browser authorities and trust related websites.
+You need to add the generated certificate `etc/certificates/docker.rootCA.crt` to your browser authorities and trust related websites.
+On OS X, this was automatically added to your keychain if the command above worked correctly. No need to do anything else.
+```
 
 Start Traefik and Portainer
 ```bash
