@@ -31,6 +31,12 @@ for now.
 ###  Start pontsun with traefik and portainer
 
 ```bash
+./scripts/pontsun up
+```
+
+or
+
+```bash
 cd containers
 docker-compose up -d
 ```

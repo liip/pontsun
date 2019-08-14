@@ -7,6 +7,8 @@ show_help() {
     echo "  -h     Print this help."
     echo
     echo "Common commands:"
+    echo "  up                     Starts pontsun services"
+    echo "  down                   Stops pontsun services"
     echo "  generate-cert [host]   Generates needed ssl certificates"
 }
 
@@ -33,6 +35,12 @@ if [ -z $1 ]; then
 fi
 
 case "$1" in
+   up)
+     $DIR/up.sh
+     ;;
+   down)
+     $DIR/down.sh
+     ;;
    generate-cert)
      $DIR/generate-certificates.sh $2
      ;;
