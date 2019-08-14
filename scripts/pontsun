@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e
+
 show_help() {
     echo "Usage: pontsun [options] <command> [<args>]"
     echo

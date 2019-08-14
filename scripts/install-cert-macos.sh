@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
+set -e
+
 # base from https://gist.github.com/koop/84254d5214495e6fc49db3284c9b7772
 # Usage
 # $ ./install-cert-macos.sh "/path/to/cert"
 
 CERT_PATH=$1
-
-
 
 # First, grab the SHA-1 from the provided SSL cert.
 CERT_SHA1=$(openssl x509 -in "$CERT_PATH" -sha1 -noout -fingerprint | cut -d "=" -f2 | sed "s/://g")
