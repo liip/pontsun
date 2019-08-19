@@ -3,7 +3,7 @@ services:
 
   traefik:
     image: traefik:$TRAEFIK_TAG
-    container_name: 'traefik'
+    container_name: 'pontsun_traefik'
     command: -c /dev/null \
       --api \
       --api.dashboard=true \
@@ -14,13 +14,13 @@ services:
       --defaultEntryPoints='https' \
       --defaultEntryPoints='http' \
       --rootCAs='/certs/${PROJECT_NAME}.rootCA.crt' \
-      --entryPoints='Name:http Address::80 Redirect.EntryPoint:https' \
+      --entryPoints='Name:http Address::80' \
       --entryPoints='Name:https Address::443 TLS:/certs/${PROJECT_NAME}.crt,/certs/${PROJECT_NAME}.key' \
       --logLevel=ERROR
     restart: always
     ports:
-      - '80:80'
-      - '443:443'
+      - '${PONTSUN_HTTP_PORT}:80'
+      - '${PONTSUN_HTTPS_PORT}:443'
     volumes:
       - ../certificates/:/certs/
       - /var/run/docker.sock:/var/run/docker.sock
@@ -28,10 +28,11 @@ services:
       - 'traefik.enable=true'
       - 'traefik.port=8080'
       - 'traefik.frontend.rule=Host:traefik.${PROJECT_NAME}.${PROJECT_EXTENSION}'
+      - 'traefik.frontend.headers.SSLRedirect=true' #always redirect to https
 
   portainer:
     image: portainer/portainer:$PORTAINER_TAG
-    container_name: 'portainer'
+    container_name: 'pontsun_portainer'
     restart: unless-stopped
     command: --no-auth -H unix:///var/run/docker.sock
     volumes:
@@ -40,3 +41,4 @@ services:
       - 'traefik.enable=true'
       - 'traefik.port=9000'
       - 'traefik.frontend.rule=Host:portainer.${PROJECT_NAME}.${PROJECT_EXTENSION}'
+      - 'traefik.frontend.headers.SSLRedirect=true' #always redirect to https
