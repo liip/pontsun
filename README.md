@@ -6,7 +6,7 @@ Create certificates for HTTPS
 ```bash
 ./scripts/pontsun generate-cert
 ```
-You need to add the generated certificate `etc/certificates/docker.rootCA.crt` to your browser authorities and trust related websites.
+You need to add the generated certificate `etc/certificates/pontsun.rootCA.crt` to your browser authorities and trust related websites.
 On OS X, this was automatically added to your keychain if the command above worked correctly. No need to do anything else.
 ```
 
