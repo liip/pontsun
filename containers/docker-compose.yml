@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
 
   traefik:
@@ -29,6 +29,8 @@ services:
       - 'traefik.port=8080'
       - 'traefik.frontend.rule=Host:traefik.${PROJECT_NAME}.${PROJECT_EXTENSION}'
       - 'traefik.frontend.headers.SSLRedirect=true' #always redirect to https
+    networks:
+      - pontsun
 
   portainer:
     image: portainer/portainer:$PORTAINER_TAG
@@ -42,3 +44,9 @@ services:
       - 'traefik.port=9000'
       - 'traefik.frontend.rule=Host:portainer.${PROJECT_NAME}.${PROJECT_EXTENSION}'
       - 'traefik.frontend.headers.SSLRedirect=true' #always redirect to https
+    networks:
+      - pontsun
+
+networks:
+  pontsun:
+    name: $PONTSUN_NETWORK
