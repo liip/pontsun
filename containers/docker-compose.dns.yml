@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+  dns:
+    image: liip/pontsun-dnsmasq:latest
+    container_name: pontsun_dns
+    restart: always
+    volumes:
+      - "$PONTSUN_DIR_ETC/dnsmasq.d/:/etc/dnsmasq.d/"
+    ports:
+      - 53:53/udp
+    networks:
+      - pontsun
+    logging:
+      options:
+        max-size: 20m
