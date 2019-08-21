@@ -30,7 +30,7 @@ gem install docker-sync
 
 ## Dnsmasq
 
-Dnsmasq will automatically forward any **\*.docker.lo** domain to our
+Dnsmasq will automatically forward any **\*.pontsun.test** domain to our
 local docker infrastructure.
 
 ```
@@ -38,20 +38,27 @@ brew install dnsmasq
 ```
 
 ```
-mkdir -pv $(brew --prefix)/etc/
-echo 'address=/docker.lo/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
-echo 'strict-order' >> $(brew --prefix)/etc/dnsmasq.conf
+mkdir -pv $(brew --prefix)/etc/dnsmasq.d/
+echo 'strict-order' > $(brew --prefix)/etc/dnsmasq.conf
+echo 'conf-dir='$(brew --prefix)'/etc/dnsmasq.d/,*.conf' >> $(brew --prefix)/etc/dnsmasq.conf
 ```
 
+and then 
+```
+./scripts/add-host.sh pontsun.test
+```
+or if you prefer to do it by hand
+``` 
+echo address=/$1/127.0.0.1 > $(brew --prefix)/dnsmasq.d/pontsun.test.conf
+echo 'strict-order' >> $(brew --prefix)/dnsmasq.d/pontsun.test.conf
+sudo mkdir -v /etc/resolver
+sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.lo'
+```
+
+and in the end
 ```
 sudo cp -v $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
 sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
-```
-
-
-```
-sudo mkdir -v /etc/resolver
-sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.lo'
 ```
 
 ## Pontsun
