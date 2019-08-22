@@ -21,9 +21,18 @@ sudo apt-get install dnsmasq
   
 ```
 mkdir -pv /etc/dnsmasq.d/
-echo 'address=/docker.lo/127.0.0.1'  | sudo tee /etc/dnsmasq.d/docker
-echo 'strict-order'  | sudo tee --append /etc/dnsmasq.d/docker
 ```
+and then 
+```
+./scripts/add-host pontsun.test
+```
+
+or if you prefer to do it by hand
+```
+echo 'address=/pontsun.test/127.0.0.1'  | sudo tee /etc/dnsmasq.d/pontsun.test.conf
+echo 'strict-order'  | sudo tee --append /etc/dnsmasq.d/pontsun.test.conf
+```
+
 ## Pontsun
 
 Pontsun provides the base setup for Docker environments.  
