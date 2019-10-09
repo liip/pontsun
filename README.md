@@ -17,8 +17,8 @@ docker-compose up -d
 
 ## Containers
 
-- Traefik ([https://traefik.docker.lo](https://traefik.docker.lo)): reverse proxy and load balancer for containers
-- Portainer ([https://portainer.docker.lo](https://portainer.docker.lo)): GUI for Docker management
+- Traefik ([https://traefik.docker.test](https://traefik.docker.test)): reverse proxy and load balancer for containers
+- Portainer ([https://portainer.docker.test](https://portainer.docker.test)): GUI for Docker management
 
 ## Resources
 - [Docker installation for Mac](docs/docker-installation-for-mac.md)

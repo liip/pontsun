@@ -12,7 +12,7 @@ Follow the installation procedure: [https://docs.docker.com/compose/install/](ht
 
 ## Dnsmasq
 
-Dnsmasq will automatically forward any **\*.docker.lo** domain to our local docker infrastructure.
+Dnsmasq will automatically forward any **\*.docker.test** domain to our local docker infrastructure.
 
 ```
 sudo apt-get update
@@ -21,7 +21,7 @@ sudo apt-get install dnsmasq
   
 ```
 mkdir -pv /etc/dnsmasq.d/
-echo 'address=/docker.lo/127.0.0.1'  | sudo tee /etc/dnsmasq.d/docker
+echo 'address=/docker.test/127.0.0.1'  | sudo tee /etc/dnsmasq.d/docker
 echo 'strict-order'  | sudo tee --append /etc/dnsmasq.d/docker
 ```
 ## Pontsun
