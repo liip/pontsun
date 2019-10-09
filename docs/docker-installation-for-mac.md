@@ -30,7 +30,7 @@ gem install docker-sync
 
 ## Dnsmasq
 
-Dnsmasq will automatically forward any **\*.docker.lo** domain to our
+Dnsmasq will automatically forward any **\*.docker.test** domain to our
 local docker infrastructure.
 
 ```
@@ -39,7 +39,7 @@ brew install dnsmasq
 
 ```
 mkdir -pv $(brew --prefix)/etc/
-echo 'address=/docker.lo/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
+echo 'address=/docker.test/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
 echo 'strict-order' >> $(brew --prefix)/etc/dnsmasq.conf
 ```
 
@@ -51,7 +51,7 @@ sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 
 ```
 sudo mkdir -v /etc/resolver
-sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.lo'
+sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.test'
 ```
 
 ## Pontsun
@@ -74,7 +74,7 @@ You need to add the generated certificate
 
 -   Double click on the certificate, this should open Keychain Access
 -   Add the certificate to **system**
--   Double on the docker.lo certificate under the system tab to open the
+-   Double on the docker.test certificate under the system tab to open the
     details
 -   Trust \> When using this certificate, set **Always Trust**
 
