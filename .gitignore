@@ -5,5 +5,8 @@
 *.pem
 *.srl
 
-# Local
+# Local .env configuration
 .env
+
+# Here are the local configurations like certificates and more later
+etc/

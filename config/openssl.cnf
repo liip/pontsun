@@ -11,5 +11,3 @@ keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 subjectAltName = @alt_names
 
 [ alt_names ]
-DNS.1 = ${ENV::PROJECT_NAME}.${ENV::PROJECT_EXTENSION}
-DNS.2 = *.${ENV::PROJECT_NAME}.${ENV::PROJECT_EXTENSION}
