@@ -38,10 +38,12 @@ cd containers
 docker-compose up -d
 ```
 
-## Containers
+## Access the containers
 
-- Traefik ([https://traefik.docker.test](https://traefik.docker.test)): reverse proxy and load balancer for containers
-- Portainer ([https://portainer.docker.test](https://portainer.docker.test)): GUI for Docker management
+- Traefik: reverse proxy and load balancer for containers
+  - https://traefik.docker.test/
+- Portainer: GUI for Docker management
+  - https://portainer.docker.test/
 
 ## Resources
 
