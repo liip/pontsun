@@ -18,13 +18,14 @@ id -u
 
 ## Commands
 
-All commands should be executed where the docker-compose.yml is.
+All commands should be executed where the `docker-compose.yml` is.
 
 **Start the containers**
 
 ```
 docker-compose up -d
 ```
+
 **Stop the containers**
 
 ```
