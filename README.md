@@ -2,15 +2,15 @@
 
 This project will help you to:
 
-* Access docker containers via Traefik ([https://traefik.docker.lo](https://traefik.docker.test)): reverse proxy and load balancer for containers
-* Manage and inspect docker via Portainer ([https://portainer.docker.lo](https://portainer.docker.test))
+* Access docker containers via [Traefik](https://traefik.io/): reverse proxy and load balancer for containers
+* Manage and inspect docker via [Portainer](https://www.portainer.io/)
 
 ## Prerequisite
 
 - docker-compose
 - A local DNS resolver to point some test domains to localhost
 
-See [#resources](#Resources).
+See [Resources](#resources).
 
 ## Installation
 Clone the liip/pontsun repository anywhere. Then `cd` to the working copy.
@@ -48,7 +48,7 @@ docker-compose up -d
 
 ## Resources
 
-### For Linux
+### For Linux (Debian/Ubuntu)
 
 - [Installation](docs/installation-for-ubuntu.md)
 - [Project setup](docs/project-setup-for-ubuntu.md)
