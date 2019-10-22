@@ -17,7 +17,7 @@ Clone the liip/pontsun repository anywhere. Then `cd` to the working copy.
 
 Create an envfile
 
-```bash
+```sh
 cp ./containers/.env.example ./containers/.env
 ```
 
@@ -25,16 +25,15 @@ Adapt the `./containers/.env` file as needed.
 
 Create certificates for HTTPS
 
-```bash
-chmod u+x ./scripts/generate-certificates.sh
-./scripts/generate-certificates.sh
+```sh
+USER_ID=$(id -u) docker-compose -f docker-compose.certificates.yml up
 ```
 
-You can add the fake root CA authority certificate `certificates/docker.rootCA.crt` to your browser authorities in order to let it trust the concerned local developement instances.
+You can add the fake root CA authority certificate `certificates/docker.test.rootCA.crt` to your browser authorities in order to let it trust the concerned local developement instances.
 
 ## Start Traefik and Portainer
 
-```bash
+```sh
 cd containers
 docker-compose up -d
 ```
