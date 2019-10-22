@@ -10,9 +10,10 @@ This project will help you to:
 - docker-compose
 - A local DNS resolver to point some test domains to localhost
 
-See [#resources](Resources).
+See [##resources](Resources).
 
 ## Installation
+Clone the liip/pontsun repository anywhere. Then `cd` to the working copy.
 
 Create an envfile
 
