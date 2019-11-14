@@ -67,3 +67,19 @@ You need to add the generated certificate
 - Double on the docker.lo certificate under the system tab to open the
   details
 - Trust \> When using this certificate, set **Always Trust**
+
+
+## Firefox certificates configuration
+
+You need to enable the enterprise root support so firefox can
+import roots found in the MacOS system keychain:
+
+ - Open Firefox
+ - Type `about:config`
+ - Click the button `I accept the risk`
+ - Type `security.enterprise_roots.enabled` and press enter
+ - Double click to set true
+ 
+Now firefox have access to your MacOS certificates
+
+[Mozilla Documentation](https://wiki.mozilla.org/CA/AddRootToFirefox)
