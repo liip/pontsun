@@ -68,7 +68,6 @@ You need to add the generated certificate
   details
 - Trust \> When using this certificate, set **Always Trust**
 
-
 ## Firefox certificates configuration
 
 You need to enable the enterprise root support so firefox can
