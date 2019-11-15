@@ -34,22 +34,8 @@ local docker infrastructure.
 
 ```
 brew install dnsmasq
-```
-
-```
-mkdir -pv $(brew --prefix)/etc/
-echo 'address=/docker.test/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
-echo 'strict-order' >> $(brew --prefix)/etc/dnsmasq.conf
-```
-
-```
-sudo cp -v $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
-sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
-```
-
-```
-sudo mkdir -v /etc/resolver
-sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.lo'
+chmod u+x ./scripts/install-dnsmasq-mac.sh
+sudo ./scripts/install-dnsmasq-mac.sh
 ```
 
 ## Trust certificates
