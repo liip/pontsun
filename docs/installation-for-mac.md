@@ -54,13 +54,13 @@ sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.test'
 
 ## Trust certificates
 
-```
-chmod u+x ./scripts/generate-certificates.sh
-./scripts/generate-certificates.sh
+Generate certificates
+```sh
+USER_ID=$(id -u) docker-compose -f docker-compose.certificates.yml up
 ```
 
 You need to add the generated certificate
-**certificates/docker.rootCA.crt** to your certificates:
+**certificates/docker.test.rootCA.crt** to your certificates:
 
 - Double click on the certificate, this should open Keychain Access
 - Add the certificate to **system**
