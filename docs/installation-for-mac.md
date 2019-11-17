@@ -49,7 +49,7 @@ sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 
 ```
 sudo mkdir -v /etc/resolver
-sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.lo'
+sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.test'
 ```
 
 ## Trust certificates
