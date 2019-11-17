@@ -1,4 +1,8 @@
-# Installation for Ubuntu 
+# Installation for Linux
+
+This installation has been tested on:
+* Debian Buster
+* Ubuntu 19.10
 
 ## Docker
 
@@ -12,15 +16,46 @@ Follow the installation procedure: [https://docs.docker.com/compose/install/](ht
 
 ## Dnsmasq
 
-Dnsmasq will automatically forward any **\*.docker.test** domain to our local docker infrastructure.
+We recommend installing only the `dnsmasq` binaries, not the full daemon.
 
-```
-sudo apt-get update
-sudo apt-get install dnsmasq
+```bash
+sudo apt update
+sudo apt install dnsmasq-base
 ```
 
+Configure Network Manager to use `dnsmasq` and `dnsmasq` to automatically forward any **\*.docker.test** domain to the loopback local IPv4 interface.
+```bash
+cat <<EOF | sudo tee /etc/NetworkManager/conf.d/dnsmasq.conf
+[main]
+dns=dnsmasq
+EOF
+
+cat <<EOF | sudo tee /etc/NetworkManager/dnsmasq.d/local-domains
+address=/docker.test/127.0.0.1
+strict-order
+EOF
 ```
-mkdir -pv /etc/dnsmasq.d/
-echo 'address=/docker.test/127.0.0.1'  | sudo tee /etc/dnsmasq.d/docker
-echo 'strict-order'  | sudo tee --append /etc/dnsmasq.d/docker
+
+Stop the current DNS daemon
+```bash
+sudo systemctl stop systemd-resolved
+```
+
+Restart the networking daemon
+```bash
+sudo systemctl restart NetworkManager
+```
+
+Let Network Manager manage /etc/resolv.conf
+```bash
+sudo mv /etc/resolv.conf /etc/resolv.conf.bck
+sudo ln -s /var/run/NetworkManager/resolv.conf /etc/resolv.conf
+```
+
+Test
+```bash
+host foobar.docker.test
+
+# Should get you: 
+foobar.docker.test has address 127.0.0.1
 ```
