@@ -13,9 +13,9 @@ services:
       --docker.exposedByDefault=false \
       --defaultEntryPoints='https' \
       --defaultEntryPoints='http' \
-      --rootCAs='/certs/${PROJECT_NAME}.rootCA.crt' \
+      --rootCAs='/certs/${PROJECT_DOMAIN}.rootCA.crt' \
       --entryPoints='Name:http Address::80' \
-      --entryPoints='Name:https Address::443 TLS:/certs/${PROJECT_NAME}.crt,/certs/${PROJECT_NAME}.key' \
+      --entryPoints='Name:https Address::443 TLS:/certs/${PROJECT_DOMAIN}.crt,/certs/${PROJECT_DOMAIN}.key' \
       --logLevel=ERROR
     restart: always
     ports:

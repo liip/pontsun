@@ -1,16 +1,39 @@
 # Pontsun
 
+This project will help you to:
+
+* Access docker containers via Traefik ([https://traefik.docker.lo](https://traefik.docker.test)): reverse proxy and load balancer for containers
+* Manage and inspect docker via Portainer ([https://portainer.docker.lo](https://portainer.docker.test))
+
+## Prerequisite
+
+- docker-compose
+- A local DNS resolver to point some test domains to localhost
+
+See [#resources](#Resources).
+
 ## Installation
+Clone the liip/pontsun repository anywhere. Then `cd` to the working copy.
+
+Create an envfile
+
+```sh
+cp ./containers/.env.example ./containers/.env
+```
+
+Adapt the `./containers/.env` file as needed.
 
 Create certificates for HTTPS
-```bash
-chmod u+x ./scripts/generate-certificates.sh
-./scripts/generate-certificates.sh
-```
-You need to add the generated certificate `certificates/docker.rootCA.crt` to your browser authorities and trust related websites.
 
-Start Traefik and Portainer
-```bash
+```sh
+USER_ID=$(id -u) docker-compose -f docker-compose.certificates.yml up
+```
+
+You can add the fake root CA authority certificate `certificates/docker.test.rootCA.crt` to your browser authorities in order to let it trust the concerned local developement instances.
+
+## Start Traefik and Portainer
+
+```sh
 cd containers
 docker-compose up -d
 ```
@@ -53,11 +76,21 @@ sudo rm -f $HOME/.ssh/socket
 sudo socat UNIX-LISTEN:$HOME/.ssh/socket,fork UNIX-CONNECT:/.ssh-agent/socket
 ```
 
-## Containers
+## Access the containers
 
-- Traefik ([https://traefik.docker.lo](https://traefik.docker.lo)): reverse proxy and load balancer for containers
-- Portainer ([https://portainer.docker.lo](https://portainer.docker.lo)): GUI for Docker management
+- Traefik: reverse proxy and load balancer for containers
+  - https://traefik.docker.test/
+- Portainer: GUI for Docker management
+  - https://portainer.docker.test/
 
 ## Resources
-- [Docker installation for Mac](docs/docker-installation-for-mac.md)
-- [Docker installation for Ubuntu](docs/docker-installation-for-ubuntu.md)
+
+### For Linux
+
+- [Installation](docs/installation-for-ubuntu.md)
+- [Project setup](docs/project-setup-for-ubuntu.md)
+
+### For Mac OS
+
+- [Installation](docs/installation-for-mac.md)
+- [Project setup](docs/project-setup-for-mac.md)
