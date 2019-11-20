@@ -40,16 +40,31 @@ sudo ./scripts/install-dnsmasq-mac.sh
 
 ## Trust certificates
 
-```
-chmod u+x ./scripts/generate-certificates.sh
-./scripts/generate-certificates.sh
+Generate certificates
+```sh
+USER_ID=$(id -u) docker-compose -f docker-compose.certificates.yml up
 ```
 
 You need to add the generated certificate
-**certificates/docker.rootCA.crt** to your certificates:
+**certificates/docker.test.rootCA.crt** to your certificates:
 
 - Double click on the certificate, this should open Keychain Access
 - Add the certificate to **system**
 - Double on the docker.lo certificate under the system tab to open the
   details
 - Trust \> When using this certificate, set **Always Trust**
+
+## Firefox certificates configuration
+
+You need to enable the enterprise root support so firefox can
+import roots found in the MacOS system keychain:
+
+ - Open Firefox
+ - Type `about:config`
+ - Click the button `I accept the risk`
+ - Type `security.enterprise_roots.enabled` and press enter
+ - Double click to set true
+ 
+Now firefox have access to your MacOS certificates
+
+[Mozilla Documentation](https://wiki.mozilla.org/CA/AddRootToFirefox)
