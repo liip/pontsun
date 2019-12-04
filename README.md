@@ -26,6 +26,7 @@ Adapt the `./containers/.env` file as needed.
 Create certificates for HTTPS
 
 ```sh
+cd containers/
 USER_ID=$(id -u) docker-compose -f docker-compose.certificates.yml up
 ```
 
