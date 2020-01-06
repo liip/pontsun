@@ -28,7 +28,7 @@ Adapt the `./containers/.env` file as needed.
 
 ```sh
 cd containers/
-USER_ID=$(id -u) docker-compose -f docker-compose.certificates.yml up
+USER_ID=$(id -u) docker-compose -p pontsun_sslkeygen -f docker-compose.certificates.yml up
 ```
 
 You can add the fake root CA authority certificate `certificates/docker.test.rootCA.crt`

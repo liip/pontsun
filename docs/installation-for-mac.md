@@ -64,7 +64,7 @@ sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.test'
 Generate certificates
 ```sh
 cd containers/
-USER_ID=$(id -u) docker-compose -f docker-compose.certificates.yml up
+USER_ID=$(id -u) docker-compose -p pontsun_sslkeygen -f docker-compose.certificates.yml up
 ```
 
 You need to add the generated certificate
