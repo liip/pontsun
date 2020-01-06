@@ -46,9 +46,28 @@ docker-compose up -d
 
 ### With SSH agent
 
-To use an ssh key from your host in your docker container, start the ssh-agent with
+#### Linux
 
-```bash
+On Linux, you don't especially need a dedicated SSH agent container
+and you could simply use it in your compose file like this:
+```yaml
+services:
+  service_name:
+    ...
+    environment:
+        SSH_AUTH_SOCK: /ssh-agent
+    ...
+    volumes:
+        - $SSH_AUTH_SOCK:/ssh-agent
+```
+
+#### Mac
+
+##### Start the ssh_agent container
+
+To use an SSH key from your host in your docker container, start the SSH agent with
+
+```sh
 cd containers
 docker-compose -f docker-compose.yml -f docker-compose.ssh-agent.yml up -d
 ```
@@ -59,28 +78,40 @@ You can also add the following to your `containers/.env` file instead
 COMPOSE_FILE=docker-compose.yml:docker-compose.ssh-agent.yml
 ```
 
-This may only be needed on OS X.
+##### Add your ssh keys
 
-It assumes, you don't run your stuff as root. If you do, you can leave the socat stuff out.
-
-```bash
+```sh
 KEY=id_rsa
-
-docker run --rm --volumes-from=pontsun_ssh_agent -v ~/.ssh/$KEY:/.ssh/$KEY -it nardeas/ssh-agent ssh-add -l 
-if [[ $? == 1 ]]; then
-    docker run --rm --volumes-from=pontsun_ssh_agent -v ~/.ssh/$KEY:/.ssh/$KEY -it nardeas/ssh-agent ssh-add /root/.ssh/id_rsa
-fi
-
-docker-compose exec -d $YOUR_CONTAINER ./socat.sh
-docker-compose exec  $YOUR_CONTAINER sudo chown $YOUR_USER /home/$YOUR_USER/.ssh/socket
+docker run --rm --volumes-from=pontsun_sshagent -v ~/.ssh/$KEY:/root/.ssh/$KEY -it docksal/ssh-agent:latest ssh-add /root/.ssh/$KEY
 ```
 
-and socat.sh is:
-```bash
-sudo killall socat 2&> /dev/null
-sudo rm -f $HOME/.ssh/socket
-sudo socat UNIX-LISTEN:$HOME/.ssh/socket,fork UNIX-CONNECT:/.ssh-agent/socket
+As the key is stored in memory, you need to add it every time the SSH agent container is restarted.
+
+##### Update your docker-compose
+
+Update your service definition to use the SSH agent.
+```yaml
+services:
+  service_name:
+    ...
+    environment:
+        SSH_AUTH_SOCK: /.ssh-agent/proxy-socket
+    ...
+    volumes:
+        - pontsun_sshagent_socket_dir:/.ssh-agent
+...
+volumes:
+    pontsun_sshagent_socket_dir:
+        external: true
 ```
+
+#### Troubleshooting
+
+Forwarding an SSH agent requires using an existing user in your container for libpam to accept the connection
+otherwise you will get the error `No user exists for uid [uid]`.
+
+If you don't, you can either create the user on the fly or use `nss_wrapper` if the image allows it,
+otherwise you need to create a derivative image.
 
 ## Access the containers
 

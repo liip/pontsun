@@ -1,19 +1,13 @@
 version: '3.5'
 services:
 
-  # needed on os x for SSH injection. May not be needed on linux. Not sure about Windows.
   sshagent:
-    image: nardeas/ssh-agent:latest
-    container_name: pontsun_ssh_agent
+    image: docksal/ssh-agent:$SSH_AGENT_TAG
+    container_name: pontsun_sshagent
     restart: unless-stopped
     volumes:
-      - "dot_ssh:/root/.ssh"
-      - "socket_dir:/.ssh-agent"
-    environment:
-      - SSH_AUTH_SOCK=/.ssh-agent/socket
+      - socket_dir:/.ssh-agent
 
 volumes:
-  dot_ssh:
-    name: pontsun_dot_ssh
   socket_dir:
-    name: pontsun_socket_dir
+    name: pontsun_sshagent_socket_dir
