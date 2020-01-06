@@ -7,15 +7,16 @@ This project will help you to:
 
 ## Prerequisite
 
-- docker-compose
+- Docker compose: [https://docs.docker.com/compose/](https://docs.docker.com/compose/)
 - A local DNS resolver to point some test domains to localhost
 
 See [Resources](#resources).
 
 ## Installation
+
 Clone the liip/pontsun repository anywhere. Then `cd` to the working copy.
 
-Create an envfile
+### Create an envfile
 
 ```sh
 cp ./containers/.env.example ./containers/.env
@@ -23,23 +24,27 @@ cp ./containers/.env.example ./containers/.env
 
 Adapt the `./containers/.env` file as needed.
 
-Create certificates for HTTPS
+### Create certificates for HTTPS
 
 ```sh
 cd containers/
 USER_ID=$(id -u) docker-compose -f docker-compose.certificates.yml up
 ```
 
-You can add the fake root CA authority certificate `certificates/docker.test.rootCA.crt` to your browser authorities in order to let it trust the concerned local developement instances.
+You can add the fake root CA authority certificate `certificates/docker.test.rootCA.crt`
+to your browser authorities in order to let it trust the concerned local development instances.
 
-## Start Traefik and Portainer
+## Start
 
+### Default
+
+Start Traefik and Portainer
 ```sh
 cd containers
 docker-compose up -d
 ```
 
-## SSH keys
+### With SSH agent
 
 To use an ssh key from your host in your docker container, start the ssh-agent with
 
@@ -88,10 +93,8 @@ sudo socat UNIX-LISTEN:$HOME/.ssh/socket,fork UNIX-CONNECT:/.ssh-agent/socket
 
 ### For Linux (Debian/Ubuntu)
 
-- [Installation](docs/installation-for-ubuntu.md)
-- [Project setup](docs/project-setup-for-ubuntu.md)
+- [Installation](docs/installation-for-debian.md)
 
-### For Mac OS
+### For macOS
 
 - [Installation](docs/installation-for-mac.md)
-- [Project setup](docs/project-setup-for-mac.md)
