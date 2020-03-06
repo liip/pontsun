@@ -59,24 +59,19 @@ sudo mkdir -v /etc/resolver
 sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.test'
 ```
 
-## Trust certificates
+## Trust certificates (to be done AFTER Pontsun install)
 
-Generate certificates
-```sh
-cd containers/
-USER_ID=$(id -u) docker-compose -p pontsun_sslkeygen -f docker-compose.certificates.yml up
-```
+### Adding them to the system
 
 You need to add the generated certificate
 **certificates/docker.test.rootCA.crt** to your certificates:
 
-- Double click on the certificate, this should open Keychain Access
+- Double click on **docker.test.rootCA.crt**, this should open Keychain Access
 - Add the certificate to **system**
-- Double on the docker.lo certificate under the system tab to open the
-  details
+- On the key chain, double click on the **docker.test** certificate under the system tab
 - Trust \> When using this certificate, set **Always Trust**
 
-## Firefox certificates configuration
+### Firefox certificates configuration
 
 You need to enable the enterprise root support so firefox can
 import roots found in the MacOS system keychain:
