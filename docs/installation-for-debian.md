@@ -1,4 +1,4 @@
-# Installation for Linux
+# Installation for Debian
 
 This installation has been tested on:
 * Debian Buster
@@ -16,8 +16,10 @@ Follow the installation procedure: [https://docs.docker.com/compose/install/](ht
 
 ## Dnsmasq
 
-We recommend installing only the `dnsmasq` binaries, not the full daemon.
+Dnsmasq will automatically forward any **\*.docker.test** domain to our
+local docker infrastructure.
 
+We recommend installing only the `dnsmasq` binaries, not the full daemon.
 ```bash
 sudo apt update
 sudo apt install dnsmasq-base

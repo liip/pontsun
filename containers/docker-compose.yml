@@ -3,7 +3,7 @@ services:
 
   traefik:
     image: traefik:$TRAEFIK_TAG
-    container_name: 'pontsun_traefik'
+    container_name: pontsun_traefik
     command: -c /dev/null \
       --api \
       --api.dashboard=true \
@@ -34,7 +34,7 @@ services:
 
   portainer:
     image: portainer/portainer:$PORTAINER_TAG
-    container_name: 'pontsun_portainer'
+    container_name: pontsun_portainer
     restart: unless-stopped
     command: --no-auth -H unix:///var/run/docker.sock
     volumes:

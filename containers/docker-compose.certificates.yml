@@ -1,9 +1,9 @@
 version: '3.5'
 services:
 
-  ssl-keygen:
+  sslkeygen:
       image: liip/ssl-keygen:$SSL_KEYGEN_TAG
-      container_name: 'pontsun_ssl-keygen'
+      container_name: pontsun_sslkeygen
       command: ls
       environment:
           OPENSSL_CERTIFICATE_EXPIRATION: 825
