@@ -5,5 +5,9 @@
 *.pem
 *.srl
 
+# Traefik config
+docker-compose.custom.yml
+config/*.yml
+
 # Local
 .env

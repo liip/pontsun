@@ -1,0 +1,12 @@
+http:
+  middlewares:
+    https_redirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /certs/docker.test.crt
+        keyFile: /certs/docker.test.key

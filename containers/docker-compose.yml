@@ -2,51 +2,56 @@ version: '3.5'
 services:
 
   traefik:
-    image: traefik:$TRAEFIK_TAG
-    container_name: pontsun_traefik
-    command: -c /dev/null \
-      --api \
-      --api.dashboard=true \
-      --docker \
-      --docker.domain='${PROJECT_NAME}.${PROJECT_EXTENSION}' \
-      --docker.watch=true \
-      --docker.exposedByDefault=false \
-      --defaultEntryPoints='https' \
-      --defaultEntryPoints='http' \
-      --rootCAs='/certs/${PROJECT_DOMAIN}.rootCA.crt' \
-      --entryPoints='Name:http Address::80' \
-      --entryPoints='Name:https Address::443 TLS:/certs/${PROJECT_DOMAIN}.crt,/certs/${PROJECT_DOMAIN}.key' \
-      --logLevel=ERROR
+    image: traefik:${TRAEFIK_TAG}
+    container_name: ${PROJECT_NAME}_traefik
+    environment:
+      TRAEFIK_API: 'true'
+      TRAEFIK_API_DASHBOARD: 'true'
+      TRAEFIK_API_INSECURE: 'true'
+      TRAEFIK_ENTRYPOINTS_HTTP: 'true'
+      TRAEFIK_ENTRYPOINTS_HTTP_ADDRESS: ':${PONTSUN_HTTP_PORT}'
+      TRAEFIK_ENTRYPOINTS_HTTPS: 'true'
+      TRAEFIK_ENTRYPOINTS_HTTPS_ADDRESS: ':${PONTSUN_HTTPS_PORT}'
+      TRAEFIK_ENTRYPOINTS_HTTPS_HTTP_TLS: 'true'
+      TRAEFIK_GLOBAL_SENDANONYMOUSUSAGE: 'false'
+      TRAEFIK_LOG_LEVEL: ERROR
+      TRAEFIK_PROVIDERS_DOCKER: 'true'
+      TRAEFIK_PROVIDERS_DOCKER_DEFAULTRULE: Host(`{{ trimPrefix `/` .Name }}.${PROJECT_DOMAIN}`)
+      TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT: 'false'
+      TRAEFIK_PROVIDERS_DOCKER_NETWORK: ${PONTSUN_NETWORK}
+      TRAEFIK_PROVIDERS_FILE_DIRECTORY: /etc/traefik/dynamic/
+      TRAEFIK_SERVERSTRANSPORT_ROOTCAS: /certs/${PROJECT_DOMAIN}.rootCA.crt
     restart: always
     ports:
       - '${PONTSUN_HTTP_PORT}:80'
       - '${PONTSUN_HTTPS_PORT}:443'
     volumes:
-      - ../certificates/:/certs/
+      - ../config/:/etc/traefik/dynamic/
+      - ../certificates/:/certs/:ro
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - 'traefik.enable=true'
-      - 'traefik.port=8080'
-      - 'traefik.frontend.rule=Host:traefik.${PROJECT_NAME}.${PROJECT_EXTENSION}'
-      - 'traefik.frontend.headers.SSLRedirect=true' #always redirect to https
+      - 'traefik.http.routers.${PROJECT_NAME}_traefik.entrypoints=http, https'
+      - 'traefik.http.routers.${PROJECT_NAME}_traefik.rule=Host(`traefik.${PROJECT_DOMAIN}`)'
+      - 'traefik.http.services.${PROJECT_NAME}_traefik.loadbalancer.server.port=8080'
     networks:
       - pontsun
 
   portainer:
-    image: portainer/portainer:$PORTAINER_TAG
-    container_name: pontsun_portainer
+    image: portainer/portainer:${PORTAINER_TAG}
+    container_name: ${PROJECT_NAME}_portainer
     restart: unless-stopped
     command: --no-auth -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - 'traefik.enable=true'
-      - 'traefik.port=9000'
-      - 'traefik.frontend.rule=Host:portainer.${PROJECT_NAME}.${PROJECT_EXTENSION}'
-      - 'traefik.frontend.headers.SSLRedirect=true' #always redirect to https
+      - 'traefik.http.routers.${PROJECT_NAME}_portainer.entrypoints=http, https'
+      - 'traefik.http.routers.${PROJECT_NAME}_portainer.rule=Host(`portainer.${PROJECT_DOMAIN}`)'
+      - 'traefik.http.services.${PROJECT_NAME}_portainer.loadbalancer.server.port=9000'
     networks:
       - pontsun
 
 networks:
   pontsun:
-    name: $PONTSUN_NETWORK
+    name: ${PONTSUN_NETWORK}
