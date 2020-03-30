@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+
+  dnsmasq:
+    image: liip/dnsmasq:${DNSMASQ_TAG}
+    container_name: pontsun_dnsmasq
+    restart: always
+    environment:
+      DNSMASQ_DEFAULT_DOMAIN: ${PROJECT_DOMAIN}
+    logging:
+      options:
+        max-size: 20m
+    ports:
+      - '${PONTSUN_DNS_PORT}:5353/udp'
+    networks:
+      - pontsun
