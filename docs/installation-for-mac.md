@@ -35,6 +35,20 @@ gem install docker-sync
 Dnsmasq will automatically forward any **\*.docker.test** domain to our
 local docker infrastructure.
 
+You can either use the Dnsmasq container or install it locally.
+
+Either way, you will also need the create the resolver
+```
+sudo mkdir -v /etc/resolver
+sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.test'
+```
+
+### Option A: Container
+
+To use the Dnsmasq container follow the [README instructions](../README.md#with-dnsmasq).
+
+### Option B: Local installation
+
 Install Dnsmasq
 ```
 brew install dnsmasq
@@ -51,12 +65,6 @@ Start Dnsmasq on every startup and launch it now
 ```
 sudo cp -v $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
 sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
-```
-
-Create resolver
-```
-sudo mkdir -v /etc/resolver
-sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/docker.test'
 ```
 
 ## Trust certificates (to be done AFTER Pontsun install)

@@ -44,6 +44,21 @@ cd containers
 docker-compose up -d
 ```
 
+### With Dnsmasq
+
+To use a Dnsmasq container rather than installing it, start Pontsun with
+
+```sh
+cd containers
+docker-compose -f docker-compose.yml -f docker-compose.dnsmasq.yml up -d
+```
+
+You can also add the following to your `containers/.env` file instead
+
+```dotenv
+COMPOSE_FILE=docker-compose.yml:docker-compose.dnsmasq.yml
+```
+
 ### With SSH agent
 
 #### Linux
@@ -74,7 +89,7 @@ docker-compose -f docker-compose.yml -f docker-compose.ssh-agent.yml up -d
 
 You can also add the following to your `containers/.env` file instead
 
-```
+```dotenv
 COMPOSE_FILE=docker-compose.yml:docker-compose.ssh-agent.yml
 ```
 

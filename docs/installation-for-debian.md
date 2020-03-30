@@ -16,6 +16,14 @@ Follow the installation procedure: [https://docs.docker.com/compose/install/](ht
 
 ## Dnsmasq
 
+You can either use the Dnsmasq container or install it locally.
+
+### Option A: Container
+
+To use the Dnsmasq container follow the [README instructions](../README.md#with-dnsmasq).
+
+### Option B: Local installation
+
 Dnsmasq will automatically forward any **\*.docker.test** domain to our
 local docker infrastructure.
 
