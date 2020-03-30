@@ -11,7 +11,7 @@ services:
 
   sshkeys:
     image: liip/ssh-agent:$SSH_AGENT_TAG
-    container_name: pontsun_sshadd
+    container_name: pontsun_sshkeys
     depends_on:
       - sshagent
     command:
