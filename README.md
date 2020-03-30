@@ -81,11 +81,19 @@ COMPOSE_FILE=docker-compose.yml:docker-compose.ssh-agent.yml
 ##### Add your ssh keys
 
 ```sh
+SSH_DIR=~/.ssh
 KEY=id_rsa
-docker run --rm --volumes-from=pontsun_sshagent -v ~/.ssh/$KEY:/root/.ssh/$KEY -it docksal/ssh-agent:latest ssh-add /root/.ssh/$KEY
+docker run \
+    --rm \
+    --volumes-from=pontsun_sshagent \
+    -v ${SSH_DIR}/${KEY}:/.ssh/${KEY} \
+    -it \
+    docker.gitlab.liip.ch/docker/ssh-agent:1.0.0 \
+    ssh-key add ${KEY}
 ```
 
-As the key is stored in memory, you need to add it every time the SSH agent container is restarted.
+The keys are stored in a named volume, as long as this volume is not destroyed,
+keys will be loaded automatically on container startup.
 
 ##### Update your docker-compose
 

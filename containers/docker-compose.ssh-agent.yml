@@ -2,12 +2,29 @@ version: '3.5'
 services:
 
   sshagent:
-    image: docksal/ssh-agent:$SSH_AGENT_TAG
+    image: liip/ssh-agent:$SSH_AGENT_TAG
     container_name: pontsun_sshagent
     restart: unless-stopped
     volumes:
       - socket_dir:/.ssh-agent
+      - sshkeys_dir:/.ssh-keys
+
+  sshkeys:
+    image: liip/ssh-agent:$SSH_AGENT_TAG
+    container_name: pontsun_sshkeys
+    depends_on:
+      - sshagent
+    command:
+      - ssh-key
+      - load
+    environment:
+      SSH_AUTH_SOCK: /.ssh-agent/proxy-socket
+    volumes:
+      - socket_dir:/.ssh-agent
+      - sshkeys_dir:/.ssh-keys
 
 volumes:
   socket_dir:
     name: pontsun_sshagent_socket_dir
+  sshkeys_dir:
+    name: pontsun_sshagent_sshkeys_dir
