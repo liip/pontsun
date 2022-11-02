@@ -38,7 +38,7 @@ services:
       - pontsun
 
   portainer:
-    image: portainer/portainer:${PORTAINER_TAG}
+    image: portainer/portainer-ce:$PORTAINERCE_TAG
     container_name: ${PROJECT_NAME}_portainer
     restart: unless-stopped
     command: --no-auth -H unix:///var/run/docker.sock
