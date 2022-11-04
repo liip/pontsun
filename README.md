@@ -4,6 +4,7 @@ This project will help you to:
 
 * Access docker containers via [Traefik](https://traefik.io/): reverse proxy and load balancer for containers
 * Manage and inspect docker via [Portainer](https://www.portainer.io/)
+  *  using user `admin` and password `1234567891011`.
 
 ## Prerequisite
 
