@@ -33,10 +33,10 @@ services:
       - pontsun
 
   portainer:
-    image: portainer/portainer-ce:$PORTAINERCE_TAG
+    image: portainer/portainer-ce:${PORTAINERCE_TAG}
     container_name: pontsun_portainer
     restart: unless-stopped
-    command: --no-auth -H unix:///var/run/docker.sock
+    command: -H unix:///var/run/docker.sock --admin-password '${PORTAINERCE_ADMIN_PASSWORD}'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
