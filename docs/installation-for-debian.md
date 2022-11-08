@@ -10,11 +10,16 @@ Follow the installation procedure: [https://docs.docker.com/install/linux/docker
 
 ## Docker compose
 
-Default compose binary shipped with Docker is the not the latest.
+Default compose binary shipped with Docker is not the latest.
 
 Follow the installation procedure: [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
 
-## Dnsmasq
+## Network Manager 
+You need to configure your network manager to resolve domains *.docker.test to localhost. To do so there is two options:
++ Using Dnsmasq (recommended)
++ Using systemd
+
+### DnsMask
 
 Dnsmasq will automatically forward any **\*.docker.test** domain to our
 local docker infrastructure.
@@ -61,3 +66,19 @@ host foobar.docker.test
 # Should get you: 
 foobar.docker.test has address 127.0.0.1
 ```
+
+### Systemd-resolved
+> Untested yet
+
+Configure systemd to resolve your dns via systemd-resolved instead of DnsMask
+```bash
+cat <<EOF | sudo tee /etc/NetworkManager/dispatcher.d/99-pontsun.conf
+#!/bin/sh
+export LC_ALL=C
+systemd-resolve --set-dns=127.0.0.1 --set-domain=docker.test
+exit 0
+```
+You will need to adapt `<default>` to your NC.
+
+Start the deamon:
+> sudo systemctl start systemd-resolved
