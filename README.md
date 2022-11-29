@@ -15,15 +15,12 @@ See [Resources](#resources).
 
 ## Installation
 
-Clone the liip/pontsun repository anywhere. Then `cd` to the working copy.
-
-### Create an envfile
+Clone the `liip/pontsun` repository anywhere. Then `cd` to the working copy:
 
 ```sh
-cp ./containers/.env.example ./containers/.env
+git clone https://github.com/liip/pontsun.git
+cd pontsun
 ```
-
-Adapt the `./containers/.env` file as needed.
 
 ### Create certificates for HTTPS
 
@@ -32,13 +29,6 @@ Create the certificates:
 cd containers/
 USER_ID=$(id -u) docker-compose -p pontsun_sslkeygen -f docker-compose.certificates.yml up
 ```
-
-Then copy the traefik config:
-```sh
-cd ..
-cp config/pontsun.yml.dist config/pontsun.yml
-```
-(You will need to tweak it if your local domain is not `docker.test`)
 
 You can add the fake root CA authority certificate `certificates/docker.test.rootCA.crt`
 to your browser authorities in order to let it trust the concerned local development instances.
