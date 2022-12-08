@@ -8,5 +8,5 @@ tls:
   stores:
     default:
       defaultCertificate:
-        certFile: /certs/docker.test.crt
-        keyFile: /certs/docker.test.key
+        certFile: /certs/wildcard.docker.test.crt
+        keyFile: /certs/wildcard.docker.test.key
