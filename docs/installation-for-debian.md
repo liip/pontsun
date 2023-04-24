@@ -110,10 +110,31 @@ sudo ln -s /var/run/NetworkManager/resolv.conf /etc/resolv.conf
 
 ### Test
 
-Test
+Test direct resolution
 ```bash
 host foobar.docker.test
-
-# Should get you: 
+```
+… should get you something like:
+```bash
 foobar.docker.test has address 127.0.0.1
+```
+
+Test DNS resolution
+```bash
+docker run busybox nslookup pypi.python.org
+```
+… should get you something like:
+```bash
+Server:         172.17.0.1
+Address:        172.17.0.1:53
+
+Non-authoritative answer:
+pypi.python.org canonical name = dualstack.python.map.fastly.net
+Name:   dualstack.python.map.fastly.net
+Address: 2a04:4e42:54::223
+
+Non-authoritative answer:
+pypi.python.org canonical name = dualstack.python.map.fastly.net
+Name:   dualstack.python.map.fastly.net
+Address: 199.232.80.223
 ```
