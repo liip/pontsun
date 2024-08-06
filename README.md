@@ -27,7 +27,7 @@ cd pontsun
 Create the certificates:
 ```sh
 cd containers/
-USER_ID=$(id -u) docker-compose -p pontsun_sslkeygen -f docker-compose.certificates.yml up
+USER_ID=$(id -u) docker compose -p pontsun_sslkeygen -f docker-compose.certificates.yml up
 ```
 
 You can add the fake root CA authority certificate `certificates/docker.test.rootCA.crt`
@@ -40,7 +40,7 @@ to your browser authorities in order to let it trust the concerned local develop
 Start Traefik and Portainer
 ```sh
 cd containers
-docker-compose up -d
+docker compose up -d
 ```
 
 ### With SSH agent
@@ -68,7 +68,7 @@ To use an SSH key from your host in your docker container, start the SSH agent w
 
 ```sh
 cd containers
-docker-compose -f docker-compose.yml -f docker-compose.ssh-agent.yml up -d
+docker compose -f docker-compose.yml -f docker-compose.ssh-agent.yml up -d
 ```
 
 You can also add the following to your `containers/.env` file instead
