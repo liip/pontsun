@@ -3,6 +3,7 @@
 This installation has been tested on:
 * Debian 12 Bookworm
 * Ubuntu 19.10
+* Fedora Workstation 40
 
 ## Docker
 
@@ -10,7 +11,7 @@ Follow the installation procedure: [https://docs.docker.com/install/linux/docker
 
 ## Docker compose
 
-Default compose binary shipped with Docker is the not the latest.
+Default compose binary shipped with Docker is not the latest.
 
 Follow the installation procedure: [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
 
@@ -23,7 +24,7 @@ There are two ways to forward the local domain;
 
 ### Unbound
 
-> Unbound is a validating, recursive, caching DNS resolver. It is designed to be fast and lean and incorporates modern features based on open standards.
+> Unbound is a validating, recursive and caching DNS resolver. It is designed to be fast and lean and incorporates modern features based on open standards.
 
 Let's install `unbound`;
 ```bash
