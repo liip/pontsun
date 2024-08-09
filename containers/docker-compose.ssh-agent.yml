@@ -1,6 +1,4 @@
-version: '3.5'
 services:
-
   sshagent:
     image: docksal/ssh-agent:$SSH_AGENT_TAG
     container_name: pontsun_sshagent

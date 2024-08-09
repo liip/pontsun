@@ -1,18 +1,16 @@
-version: '3.5'
 services:
-
   sslkeygen:
-      image: liip/ssl-keygen:$SSL_KEYGEN_TAG
-      container_name: pontsun_sslkeygen
-      command: ls
-      environment:
-          OPENSSL_CERTIFICATE_EXPIRATION: 825
-          OPENSSL_CERTIFICATE_SUBJECT_COUNTRY: CH
-          OPENSSL_CERTIFICATE_SUBJECT_STATE: FR
-          OPENSSL_CERTIFICATE_SUBJECT_LOCATION: Fribourg
-          OPENSSL_CERTIFICATE_SUBJECT_ORGANIZATION: Liip
-          OPENSSL_CERTIFICATE_SUBJECT_ORGANIZATION_UNIT: Pontsun
-          SITE_DOMAIN: $PROJECT_DOMAIN
-      volumes:
-          - ../certificates/:/certificates:rw
-      user: $USER_ID
+    image: liip/ssl-keygen:$SSL_KEYGEN_TAG
+    container_name: pontsun_sslkeygen
+    command: ls
+    environment:
+      OPENSSL_CERTIFICATE_EXPIRATION: 825
+      OPENSSL_CERTIFICATE_SUBJECT_COUNTRY: CH
+      OPENSSL_CERTIFICATE_SUBJECT_STATE: FR
+      OPENSSL_CERTIFICATE_SUBJECT_LOCATION: Fribourg
+      OPENSSL_CERTIFICATE_SUBJECT_ORGANIZATION: Liip
+      OPENSSL_CERTIFICATE_SUBJECT_ORGANIZATION_UNIT: Pontsun
+      SITE_DOMAIN: $PROJECT_DOMAIN
+    volumes:
+      - ../certificates/:/certificates:rw
+    user: $USER_ID
