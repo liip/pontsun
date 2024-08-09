@@ -2,9 +2,9 @@
 
 This project will help you to:
 
-* Access docker containers via [Traefik](https://traefik.io/): reverse proxy and load balancer for containers
-* Manage and inspect docker via [Portainer](https://www.portainer.io/)
-  *  using user `admin` and password `1234567891011`.
+- Access docker containers via [Traefik](https://traefik.io/): reverse proxy and load balancer for containers
+- Manage and inspect docker via [Portainer](https://www.portainer.io/)
+  - using user `admin` and password `1234567891011`.
 
 ## Prerequisite
 
@@ -25,6 +25,7 @@ cd pontsun
 ### Create certificates for HTTPS
 
 Create the certificates:
+
 ```sh
 cd containers/
 USER_ID=$(id -u) docker compose -p pontsun_sslkeygen -f docker-compose.certificates.yml up
@@ -38,6 +39,7 @@ to your browser authorities in order to let it trust the concerned local develop
 ### Default
 
 Start Traefik and Portainer
+
 ```sh
 cd containers
 docker compose up -d
@@ -49,6 +51,7 @@ docker compose up -d
 
 On Linux, you don't especially need a dedicated SSH agent container
 and you could simply use it in your compose file like this:
+
 ```yaml
 services:
   service_name:
@@ -89,6 +92,7 @@ As the key is stored in memory, you need to add it every time the SSH agent cont
 ##### Update your docker-compose
 
 Update your service definition to use the SSH agent.
+
 ```yaml
 services:
   service_name:
@@ -128,3 +132,47 @@ otherwise you need to create a derivative image.
 ### For macOS
 
 - [Installation](docs/installation-for-mac.md)
+
+## Use with your project
+
+To use this with your project, you simply need to update your `docker-compose.yml`.
+
+First add an external network:
+
+```yaml
+networks:
+  pontsun:
+    name: pontsun
+    external: true
+```
+
+Then for every services which needs a url:
+
+```yaml
+services:
+  my-service:
+    # ... your service definition
+
+    # You need the pontsun network
+    networks:
+      # You can add this default network if you do not have any configured
+      - default
+      # Add the pontsun network
+      - pontsun
+
+    # As well as those labels
+    labels:
+      - traefik.enable=true
+      # Notice the url defined here, you can change it needs to fit the format "*.docker.test"
+      - traefik.http.routers.liippdf.rule=Host(`MY-SERVICE.docker.test`)
+      - traefik.http.routers.liippdf.entrypoints=http,https
+      # If your dockerfile exposes multiple ports, you need to precise which one is to be used
+      # - traefik.http.services.liippdf.loadbalancer.server.port=8000
+
+    # Exposing ports is not needed anymore as you will access services by name
+    # ports:
+    #   - 8000
+
+  my-other-service:
+    # ... make the same changes as for my-service
+```
