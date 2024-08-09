@@ -123,16 +123,6 @@ otherwise you need to create a derivative image.
 - Portainer: GUI for Docker management
   - https://portainer.docker.test/
 
-## Resources
-
-### For Linux (Debian/Ubuntu)
-
-- [Installation](docs/installation-for-debian.md)
-
-### For macOS
-
-- [Installation](docs/installation-for-mac.md)
-
 ## Use with your project
 
 To use this with your project, you simply need to update your `docker-compose.yml`.
@@ -176,3 +166,13 @@ services:
   my-other-service:
     # ... make the same changes as for my-service
 ```
+
+## Resources
+
+### For Linux (Debian/Ubuntu)
+
+- [Installation](docs/installation-for-debian.md)
+
+### For macOS
+
+- [Installation](docs/installation-for-mac.md)
