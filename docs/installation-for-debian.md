@@ -26,6 +26,10 @@ There are two ways to forward the local domain;
 
 ### `Unbound` (recommended)
 
+#### WARNING
+
+As of 2024-11, the `unbound` setup doesn't work on recent Ubuntu.
+
 > Unbound is a validating, recursive and caching DNS resolver. It is designed to be fast and lean and incorporates modern features based on open standards.
 
 Let's install `unbound`;
