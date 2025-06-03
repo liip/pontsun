@@ -1,6 +1,6 @@
 services:
   sslkeygen:
-    image: liip/ssl-keygen:$SSL_KEYGEN_TAG
+    image: liip/ssl-keygen:1.0.0
     container_name: pontsun_sslkeygen
     command: ls
     environment:

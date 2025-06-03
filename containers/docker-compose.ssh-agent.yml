@@ -1,6 +1,6 @@
 services:
   sshagent:
-    image: docksal/ssh-agent:$SSH_AGENT_TAG
+    image: docksal/ssh-agent:1.4
     container_name: pontsun_sshagent
     restart: unless-stopped
     volumes:
