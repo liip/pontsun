@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: traefik:${TRAEFIK_TAG}
+    image: traefik:3.4
     container_name: ${PROJECT_NAME}_traefik
     environment:
       TRAEFIK_API: "true"
@@ -36,7 +36,7 @@ services:
       - pontsun
 
   portainer:
-    image: portainer/portainer-ce:$PORTAINERCE_TAG
+    image: portainer/portainer-ce:2.30.1
     container_name: ${PROJECT_NAME}_portainer
     restart: unless-stopped
     command:
