@@ -58,8 +58,8 @@ EOF
 And configure unbound to resolve `docker.test` to localhost:
 
 ```bash
-sudo mkdir /etc/unbound/unbound.conf.d
-cat <<EOF | sudo tee /etc/unbound/unbound.conf.d/pontsun.conf
+sudo mkdir -p /etc/unbound/conf.d
+cat <<EOF | sudo tee /etc/unbound/conf.d/pontsun.conf
 server:
   local-zone: "docker.test" redirect
   local-data: "docker.test. 3600 IN A 127.0.0.1"
