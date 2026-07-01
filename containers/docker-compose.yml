@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: traefik:3.6
+    image: traefik:v3.7
     container_name: ${PROJECT_NAME}_traefik
     environment:
       TRAEFIK_API: "true"
